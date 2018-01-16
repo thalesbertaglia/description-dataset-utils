@@ -40,3 +40,16 @@ def get_total_duration(in_file):
             start, end = line.split('\t')[0].split('_')[-1].split('-')
             duration += string_to_seconds(end) - string_to_seconds(start)
     return duration
+
+
+def filter_by_duration(in_file, threshold):
+    '''Returns a list of clips with total duration <= the given threshold (in seconds).'''
+    desc = []
+    with open(in_file) as f:
+        for line in f:
+            # Gets start and end time of given description
+            start, end = line.split('\t')[0].split('_')[-1].split('-')
+            duration = string_to_seconds(end) - string_to_seconds(start)
+            if duration <= threshold:
+                desc.append(line.split('\t')[0].strip())
+    return desc
